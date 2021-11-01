@@ -1,6 +1,6 @@
 # Weakly Supervised Object Localization
 
-This repository was made in partial fulfillment for the course [Visual Learning and Recognition (16-824) Fall 2021](https://visual-learning.cs.cmu.edu/), which I took at CMU. 
+This repository was created in partial fulfillment for the course [Visual Learning and Recognition (16-824) Fall 2021](https://visual-learning.cs.cmu.edu/), which I took at CMU. 
 
 This repository contains code that trains object detectors in a *weakly supervised* setting, which means you're going to train object detectors without bounding box annotations.
 
@@ -173,42 +173,3 @@ The expected values for the metrics at the end of training are:
 
 Include all the code and images/logs after training.
 Report the final class-wise AP on the test set and the mAP.
-
-
-
-# Submission Checklist 
-## Report
-
-### Task 0
-- [ ] Answer Q0.1, Q0.2
-- [ ] wandb screenshot for Q0.3
-- [ ] wandb screenshot for Q0.4
-### Task 1
-- [ ] Q1.1 describe functionality of the completed TODO blocks
-- [ ] Answer Q1.2
-- [ ] Answer Q1.4
-- [ ] Answer Q1.5 and describe functionality of the completed TODO blocks
-- [ ] Q1.6
-	- [ ] Add screenshot of metric1, metric2 on the training set
-	- [ ] Add screenshot of metric1, metric2 on the validation set
-	- [ ] Screenshot of wandb showing images and heat maps for the first logged epoch
-	- [ ] Screenshot of wandb showing images and heat maps for the last logged epoch
-	- [ ] wandb screenshot for 3 randomly chosen validation images and heat maps
-	- [ ] Report training loss, validation metric1, validation metric2 at the end of training
-
-- [ ] Q1.7 
-	- [ ] Screenshot of wandb showing images and heat maps for the first logged epoch \*for Q1.6 and Q1.7 show image and heatmap side-by-side\*.
-	- [ ] Screenshot of wandb showing images and heat maps for the last logged epoch \*for Q1.6 and Q1.7 show image and heatmap side-by-side\*.
-	- [ ] wandb screenshot for 3 randomly chosen validation images (but same images as Q1.6) and heat maps
-	- [ ] Report training loss, validation metric1, validation metric2 at the end of training
-
-### Task 2
-- [ ] Q2.4 wandb downloaded image of training loss vs iterations
-- [ ] Q2.4 wandb downloaded image of test mAP vs iterations plot
-- [ ] Q2.4 screenshot for class-wise APs vs iterations for 3 or more classes
-- [ ] Q2.4 screenshot of images with predicted boxes for the first logged epoch
-- [ ] Q2.4 screenshot of images with predicted boxes for the last logged epoch (~5 epochs)
-- [ ] Q2.4 report final classwise APs on the test set and mAP on the test set
-
-## Other Data
-- [ ] code folder
