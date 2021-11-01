@@ -1,10 +1,10 @@
 # Weakly Supervised Object Localization
 
-This repository was created in partial fulfillment for the course [Visual Learning and Recognition (16-824) Fall 2021](https://visual-learning.cs.cmu.edu/), which I took at CMU. 
+This repository was made in partial fulfillment for the course [Visual Learning and Recognition (16-824) Fall 2021](https://visual-learning.cs.cmu.edu/), which I took at CMU. 
 
-This repository contains code that trains object detectors in a *weakly supervised* setting, which means you're going to train object detectors without bounding box annotations!
+This repository contains code that trains object detectors in a *weakly supervised* setting, which means you're going to train object detectors without bounding box annotations.
 
-We use [PyTorch](pytorch.org) to create our models and [Weights and Biases](https://wandb.ai/site) for visualizations and to logging. We implemented a slightly simplified version of the following papers:
+We use [PyTorch](pytorch.org) to create our models and [Weights and Biases](https://wandb.ai/site) for visualizations and logging. We implemented a slightly simplified version of the following papers:
 
 1. Oquab, Maxime, et al. "*Is object localization for free?-weakly-supervised learning with convolutional neural networks.*" Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2015. [Link](https://www.di.ens.fr/~josef/publications/Oquab15.pdf)
 2. Bilen, Hakan, and Andrea Vedaldi. "*Weakly supervised deep detection networks*." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2016. [Link](https://www.robots.ox.ac.uk/~vgg/publications/2016/Bilen16/bilen16.pdf)
@@ -24,7 +24,7 @@ The following Python libraries are required for running the repository:
 
 
 ### Data setup
-1. To download the image dataset you can use the code below. The data below should be stored in the folder `data`.
+To download the image dataset you can use the code below. The data below should be stored in the folder `data`.
 ```bash
 $ cd data
 $ wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
@@ -34,29 +34,15 @@ $ wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar &&
 $ cd VOCdevkit/VOC2007/
 $ export DATA_DIR=$(pwd)
 ```
-2. In the main folder of the code provided in this repository, there is an empty directory with the name `data`. 
-	- In this folder, you need to create a link to `VOCdevkit` in this folder. 
-	- If you read WSDDN paper [2], you should know that it requires bounding box proposals from Selective Search, Edge Boxes or a similar method. We provide you with this data for the assignment. You need to put these proposals in the data folder too.
+WSDDN [2] requires bounding box proposals from either Selective Search, Edge Boxes or any other similar method. We can download these proposals from the follwoing link. You need to put these proposals in the `data` folder too. The code below can be used to download these models.
 	
 ```bash
 # You can run these commands to populate the data directory
 $ # First, cd to the main code folder
-$ # Then cd to the data folder
 $ cd data/VOCdevkit/VOC2007/
 $ # Download the selective search data
 $ wget https://www.cs.cmu.edu/~spurushw/files/selective_search_data.tar && tar xf selective_search_data.tar
 ```
-
-## Task 0: Visualization and Understanding the Data Structures
-We will be building on code from the previous assignment, this time to include information about bounding boxes and region proposals in our dataloaders.
-
-### Modifying the Dataloader #
-You will have to modify the VOCDataset class in `voc_dataset.py` to return bounding boxes, classes corresponding to the bounding boxes, as well as selective search region proposals. Check the `TODO` in `voc_dataset.py` and make changes wherever necessary. Once this is done, you will use Wandb to visualize the bounding boxes. The file `task_0.ipynb` has detailed instructions for this task.
-
-#### Q 0.1: What classes does the image at index 2020 contain (index 2020 is the 2021-th image due to 0-based numbering)?
-#### Q 0.2: You might have noticed that each image has a certain number of proposals from selective search. Often, this number is a lot more than we require. What is the easiest way to select the most informative regions? (Hint: look at the scores corresponding to each proposal in `voc_2007_trainval.mat`).
-#### Q 0.3 Use Wandb to visualize the ground-truth bounding box and the class for the image at index 2020.
-#### Q 0.4 Use Wandb to visualize the top ten bounding box proposals for the image at index 2020.
 
 
 ## Task 1: Is Object Localization Free?
