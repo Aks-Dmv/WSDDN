@@ -47,14 +47,15 @@ $ wget https://www.cs.cmu.edu/~spurushw/files/selective_search_data.tar && tar x
 
 ## Having a quick look at the data
 Before diving into the code, we will have a quick look at the dataset and the bounding boxes. We can plot the images and their bounding boxes using wandb. To run your own visulaization, you can adapt the file `visualize_dataset.ipynb`. An example is shown below. The image on the left is a sample image and its ground truth bounding box, while the image on the right is the proposed bounding boxes from selective search. 
-
-![alt](pics/train.png) ![alt](pics/train_bbox.png)
+| Picture of a random image and bounding box | Proposed Bounding boxes using selective search |
+|---|---|
+| ![alt](pics/train.png) | ![alt](pics/train_bbox.png) | 
 
 The final heatmaps can be visualized using weights and biases as shown below. We first plot the heatmaps for the normal Alexnet model, and then plot the heatmaps for the robust alexnet model, which learns weights at different scales in the image.
 
 
 ## Training the Weakly Supervised Convolutional Neural Networks
-We can train our Weakly Supervised CNN using the code `WS_CNN.py`. We have two different models, which give us different degrees of heatmap expression.
+We can train our Weakly Supervised CNN using the code `WS_CNN.py`. We have two different models, which give us different degrees of heatmap expressions.
 
 ```python
 import wandb
