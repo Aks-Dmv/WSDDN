@@ -50,7 +50,10 @@ Before diving into the code, we will have a quick look at the dataset and the bo
 
 ![alt](pics/train.png) ![alt](pics/train_bbox.png)
 
+The final heatmaps can be visualized using weights and biases as shown below. We first plot the heatmaps for the normal Alexnet model, and then plot the heatmaps for the robust alexnet model, which learns weights at different scales in the image.
 
+The image on the left is a picture of a man and his dog. We ideally should have two activations, one for the man and one for the dog. We plot the heatmaps that we get using the robust alexnet model for the person and dog filters below. Notics how the man activations focus on his head, while the dog activation focuses on the dog.
+![alt](pics/man_dog.png) ![alt](pics/robust_man_heatmap.png) ![alt](pics/robust_dog_heatmap.png)
 
 
 ## Training the Weakly Supervised Convolutional Neural Networks
