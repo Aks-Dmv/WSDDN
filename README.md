@@ -47,6 +47,8 @@ $ wget https://www.cs.cmu.edu/~spurushw/files/selective_search_data.tar && tar x
 
 ## Having a quick look at the data
 Before diving into the code, we will have a quick look at the dataset and the bounding boxes. We can plot the images and their bounding boxes using wandb. An example is shown below.
+
+
 Sample Image and its Bounding box | Proposed Bounding Boxes from Selective Search
 - | - 
 ![alt](pics/train.png) | ![alt](pics/train_bbox.png)
