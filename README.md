@@ -52,15 +52,6 @@ Before diving into the code, we will have a quick look at the dataset and the bo
 
 The final heatmaps can be visualized using weights and biases as shown below. We first plot the heatmaps for the normal Alexnet model, and then plot the heatmaps for the robust alexnet model, which learns weights at different scales in the image.
 
-The image on the left is a picture of a man and his dog. We ideally should have two activations, one for the man and one for the dog. We plot the heatmaps that we get using the robust alexnet model for the person and dog filters below. Notics how the man activations focus on his head, while the dog activation focuses on the dog.
-
-| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
-|---|---|---|
-| ![alt](pics/man_dog.png) | ![alt](pics/robust_man_heatmap.png) | ![alt](pics/robust_dog_heatmap.png) |
-
-
-![alt](pics/man_dog.png) ![alt](pics/robust_man_heatmap.png) ![alt](pics/robust_dog_heatmap.png)
-
 
 ## Training the Weakly Supervised Convolutional Neural Networks
 We can train our Weakly Supervised CNN using the code `WS_CNN.py`. We have two different models, which give us different degrees of heatmap expression.
@@ -75,6 +66,23 @@ wandb.log({'epoch': epoch, 'loss': loss})
 We plot the training loss and multi-label classification error below, across epochs.
 
 ![alt](pics/train_loss.png) ![alt](pics/train_m1.png)
+
+The images in the first column show a random picture from the dataset. For this example, we ideally should have two activations, one for the man and one for the dog. We plot the heatmaps that we get using the both the robust AlexNet model and the normal AlexNet for the person and dog filters below. Notice how the man activations focus on his head, while the dog activation focuses on the dog. This can be considered as a good sanity check to confirm that our model is indeed working.
+
+### Robust AlexNet Results (with multi-scale aggregation)
+
+| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
+|---|---|---|
+| ![alt](pics/man_dog.png) | ![alt](pics/robust_man_heatmap.png) | ![alt](pics/robust_dog_heatmap.png) |
+
+
+
+### Normal AlexNet Results (vanilla baseline)
+
+| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
+|---|---|---|
+| ![alt](pics/man_dog.png) | ![alt](pics/man_heatmap.png) | ![alt](pics/dog_heatmap.png) |
+
 
 
 ## Task 2: Weakly Supervised Deep Detection Networks
