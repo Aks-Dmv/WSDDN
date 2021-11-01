@@ -102,14 +102,10 @@ We show some bounding box results below. Note that these models do not have acce
 
 ### Some Results
 
-| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
+| ![alt](pics/task2_pic8.png) | ![alt](pics/task2_pic5.png) | ![alt](pics/task2_pic2.png) |
 |---|---|---|
 | ![alt](pics/task2_pic1.png) | ![alt](pics/task2_pic11.png) | ![alt](pics/task2_pic3.png) |
 |---|---|---|
-| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
-| ![alt](pics/task2_pic8.png) | ![alt](pics/task2_pic5.png) | ![alt](pics/task2_pic2.png) |
-|---|---|---|
-| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
 | ![alt](pics/task2_pic4.png) | ![alt](pics/task2_pic9.png) | ![alt](pics/task2_pic10.png) |
 
 
