@@ -46,84 +46,26 @@ $ wget https://www.cs.cmu.edu/~spurushw/files/selective_search_data.tar && tar x
 
 
 ## Having a quick look at the data
-Before diving into the code, we will have a quick look at the dataset and the bounding boxes. We can plot the images and their bounding boxes using wandb. An example is shown below. The image on the left is a sample image and its ground truth bounding box, while the image on the right is the proposed bounding boxes from selective search.
+Before diving into the code, we will have a quick look at the dataset and the bounding boxes. We can plot the images and their bounding boxes using wandb. To run your own visulaization, you can adapt the file `visualize_dataset.ipynb`. An example is shown below. The image on the left is a sample image and its ground truth bounding box, while the image on the right is the proposed bounding boxes from selective search. 
 
 ![alt](pics/train.png) ![alt](pics/train_bbox.png)
 
 
 
-A good way to dive into using PyTorch is training a simple classification model on ImageNet. 
-We won't be doing that to save the rainforest (and AWS credits) but you should take a look at the code [here](https://github.com/pytorch/examples/blob/master/imagenet/main.py). We will be following the same structure.
 
-The code for the model is in `AlexNet.py`. In the code, you need to fill in the parts that say "TODO" (read the questions before you start filling in code). 
-We need to define our model in one of the "TODO" parts. We are going to call this ``LocalizerAlexNet``. I've written a skeleton structure in `AlexNet.py`. You can look at the AlexNet example of PyTorch. For simplicity and speed, we won't be copying the FC layers to our model. We want the model to look like this:
-```text
-LocalizerAlexNet(
-  (features): Sequential(
-    (0): Conv2d(3, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
-    (1): ReLU(inplace)
-    (2): MaxPool2d(kernel_size=(3, 3), stride=(2, 2), dilation=(1, 1), ceil_mode=False)
-    (3): Conv2d(64, 192, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
-    (4): ReLU(inplace)
-    (5): MaxPool2d(kernel_size=(3, 3), stride=(2, 2), dilation=(1, 1), ceil_mode=False)
-    (6): Conv2d(192, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-    (7): ReLU(inplace)
-    (8): Conv2d(384, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-    (9): ReLU(inplace)
-    (10): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-    (11): ReLU(inplace)
-  )
-  (classifier): Sequential(
-    (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-    (1): ReLU(inplace)
-    (2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
-    (3): ReLU(inplace)
-    (4): Conv2d(256, 20, kernel_size=(1, 1), stride=(1, 1))
-  )
-)
-```
+## Training the Weakly Supervised Convolutional Neural Networks
+We can train our Weakly Supervised CNN using the code `WS_CNN.py`. We have two different models, which give us different degrees of heatmap expression.
 
-#### Q 1.1 Fill in each of the TODO parts except for the functions ``metric1``, ``metric2`` and ``LocalizerAlexNetRobust``. In the report, for each of the TODO, describe the functionality of that part. The output of the above model has some spatial resolution. Make sure you read paper [1] and understand how to go from the output to an image level prediction (max-pool). (Hint: This part will be implemented in ``train()`` and ``validate()``.
-
-#### Q 1.2 What is the output resolution of the model?
-
-#### Plotting using Weights and Biases
-Logging to [Weights and Biases](https://docs.wandb.ai/quickstart), also known as `wandb` is quite easy and super useful. You can use this to keep track of experiment hyperparameters and metrics such as loss/accuracy.
 ```python
 import wandb
 wandb.init(project="vlr-hw2")
 # logging the loss
 wandb.log({'epoch': epoch, 'loss': loss})
 ```
-You can also use it to save models, perform hyperparameter tuning, and other cool stuff.
 
-When you're logging to WandB, make sure you use good tag names. For example, for all training plots you can use ``train/loss``, ``train/metric1``, etc and for validation ``validation/metric1``, etc.
+We plot the training loss and multi-label classification error below, across epochs.
 
-#### Q 1.3 Initialize the model from ImageNet (till the conv5 layer). Initialize the rest of layers with Xavier initialization and train the model using batchsize=32, learning rate=0.01, epochs=2 (Yes, only 2 epochs for now).(Hint: also try lr=0.1 - best value varies with implementation of loss)
-- Use wandb to plot the training loss curve.
-- Use wandb to plot images and the rescaled heatmaps for only the GT classes for 2 batches (1 images in each batch) in every epoch (uniformly spaced in iterations).
-
-#### Q 1.4 In the first few iterations, you should observe a steep drop in the loss value. Why does this happen? (Hint: Think about the labels associated with each image).
-
-#### Q 1.5 We will log two metrics during training to see if our model is improving progressively with iterations. The first metric is a standard metric for multi-label classification. Do you remember what this is? Write the code for this metric in the TODO block for ``metric1`` (make sure you handle all the boundary cases). However, ``metric1`` is to some extent not robust to the issue we identified in Q1.4. The second metric, Recall, is more tuned to this dataset. Even though there is a steep drop in loss in the first few iterations ``metric2`` should remain almost constant. Implement it in the TODO block for ``metric2``. (Make any assumptions needed - like thresholds).
-
-### We're ready to train now!
-
-#### Q 1.6 Initialize the model from ImageNet (till the conv5 layer), initialize the rest of layers with Xavier initialization and train the model using batchsize=32, learning rate=0.01, epochs=30. Evaluate every 2 epochs. (Hint: also try lr=0.1 - best value varies with implementation of loss) \[Expected training time: 45mins-75mins].
-- IMPORTANT: FOR ALL EXPERIMENTS FROM HERE - ENSURE THAT THE SAME IMAGES ARE PLOTTED ACROSS EXPERIMENTS BY KEEPING THE SAMPLED BATCHES IN THE SAME ORDER. THIS CAN BE DONE BY FIXING THE RANDOM SEEDS BEFORE CREATING DATALOADERS.
-- Use wandb to plot the training loss curve, training ``metric1``, training ``metric2``
-- Use wandb to plot the mean validation ``metric1`` and mean validation ``metric2`` for every 2 epochs.
-- Use wandb to plot images and the rescaled heatmaps for only the GT classes for 2 batches (1 images in each batch) at the end of the 1st, 15th, and last(30th) epoch. 
-
-- At the end of training, use wandb to plot 3 randomly chosen images and corresponding heatmaps (similar to above) from the validation set.
-- In your report, mention the training loss, training and validation ``metric1`` and ``metric2`` achieved at the end of training. 
-
-
-#### Q 1.7 In the heatmap visualizations you observe that there are usually peaks on salient features of the objects but not on the entire objects. How can you fix this in the architecture of the model? (Hint: during training the max-pool operation picks the most salient location). Implement this new model in ``LocalizerAlexNetRobust`` and also implement the corresponding ``localizer_alexnet_robust()``. Train the model using batchsize=32, learning rate=0.01, epochs=45. Evaluate every 2 epochs.(Hint: also try lr=0.1 - best value varies with implementation of loss)
-- For this question only visualize images and heatmaps using wandb at similar intervals as before (ensure that the same images are plotted). 
-- You don't have to plot the rest of the quantities that you did for previous questions (if you haven't put flags to turn off logging the other quantities, it's okay to log them too - just don't add them to the report).
-- At the end of training, use wandb to plot 3 randomly chosen images (same images as Q1.6) and corresponding heatmaps from the validation set.
-- Report the training loss, training and validation ``metric1`` and ``metric2`` achieved at the end of training. 
+![alt](pics/train_loss.png) ![alt](pics/train_m1.png)
 
 
 ## Task 2: Weakly Supervised Deep Detection Networks
