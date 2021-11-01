@@ -54,10 +54,9 @@ The final heatmaps can be visualized using weights and biases as shown below. We
 
 The image on the left is a picture of a man and his dog. We ideally should have two activations, one for the man and one for the dog. We plot the heatmaps that we get using the robust alexnet model for the person and dog filters below. Notics how the man activations focus on his head, while the dog activation focuses on the dog.
 
-| - | - | - |
+| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
 |---|---|---|
-| I am text to the left  | ![alt](pics/robust_man_heatmap.png) | ![alt](pics/robust_dog_heatmap.png) |
-| ![alt](pics/man_dog.png) | I am text to the right | I am text to the right |
+| ![alt](pics/man_dog.png) | ![alt](pics/robust_man_heatmap.png) | ![alt](pics/robust_dog_heatmap.png) |
 
 
 ![alt](pics/man_dog.png) ![alt](pics/robust_man_heatmap.png) ![alt](pics/robust_dog_heatmap.png)
