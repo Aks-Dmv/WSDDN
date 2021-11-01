@@ -105,7 +105,6 @@ We show some bounding box results below. Note that these models do not have acce
 | ![alt](pics/task2_pic8.png) | ![alt](pics/task2_pic5.png) | ![alt](pics/task2_pic2.png) |
 |---|---|---|
 | ![alt](pics/task2_pic1.png) | ![alt](pics/task2_pic11.png) | ![alt](pics/task2_pic3.png) |
-|---|---|---|
 | ![alt](pics/task2_pic4.png) | ![alt](pics/task2_pic9.png) | ![alt](pics/task2_pic10.png) |
 
 
