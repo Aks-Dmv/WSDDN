@@ -88,54 +88,34 @@ The images in the first column show a random picture from the dataset. For this 
 
 ## Task 2: Weakly Supervised Deep Detection Networks
 
-First, make sure you understand the WSDDN model. 
+We can train our Weakly Supervised Deep Detection Network using the code `WS_DDN.py`. We show the results below. You can run the code using the command below:
 
-The main script for training is ``task_2.py``.  Read all the comments to understand what each part does. There are a few major components that you need to work on:
+```bash
+python WS_DDN.py
+```
 
-- The network architecture and functionality ``WSDDN``
-- Writing the traning loop and including visualizations for metrics
-- The function `test_net()` in `task_2.py`, which will log metrics on the test set
+We plot the mean average precision below, across epochs.
 
-Tip for Task 2: conda install tmux, and train in a tmux session. That way you can detach, close your laptop (don't stop your ec2 instance!), and go enjoy a cookie while you wait.
+![alt](pics/testmap_task2.png)
 
-#### Q2.1 In ``wsddn.py``, you need to complete the  ``__init__, forward`` and `` build_loss`` functions. 
-The `__init__()` function will be used to define the model. You can define 3 parts for the model
-1. The feature extractor
-2. A ROI-pool layer (use torchvision.ops)
-3. A classifier layer, as defined in the WSDDN paper.
+We show some bounding box results below. Note that these models do not have access to the ground truth boxes. 
 
-The `forward()` function will essentially do the following:
-1. Extract features from a given image (notice that batch size is 1 here).
-2. Use the regions proposed from Selective Search, perform ROI Pooling. There are 2 caveats here - ensure that the proposals are now absolute values of pixels in the input image, and ensure that the scale factor passed into the ROI Pooling layer works correctly for the given image and features [ref](https://discuss.pytorch.org/t/spatial-scale-in-torchvision-ops-roi-pool/59270).
-3. For each image, ROI Pooling gives us a feature map for the proposed regions. Pass these features into the classifier subnetwork. Here, you can think of batch size being the number of region proposals for each image.
-4. Combine the classifier outputs (for boxes and classes), which will give you a tensor of shape (N_boxes x 20). Return this.
+### Some Results
 
-The `build_loss()` function now computes classification loss, which can be accessed in the training loop.
-
-
-#### Q2.2 In ``task_2.py`` you will first need to write the training loop.
-This involves creating the dataset, calling the dataloaders, etc. and then finally starting the training loop with the forward and backward passes. Some of this functionality has already been implemented for you. Ideally, use the hyperparameters given in the code. You don't need to implement the visualizations yet.
-Use `top_n=300`, but feel free to increase it as well.
-
-#### Q2.3 In ``task_2.py``, you now need to write a function to test your model, and visualize its predictions.
-1. Write a test loop similar to the training loop, and calculate mAP as well as class-wise AP's.
-
-At this point, we have our model giving us (N_boxes x 20) scores. We can interpret this as follows - for each of the 20 classes, there are `N` boxes, which have confidence scores for that particular class. Now, we need to perform Non-Max Suppression for the bbox scores corresponding to each class.
-- In `utils.py`, write the NMS function. NMS depends on the calculation of Intersection Over Union (IoU), which you can either implement as a separate function, or vectorize within the NMS function itself. Use an IoU threshold of 0.3.
-- Use NMS with a confidence threshold of 0.05 (basically consider only confidence above this value) to remove unimportant bounding boxes for each class.
-- In the test code, iterate over indices for each class. For each class, visualize the NMSed bounding boxes with the class names and the confidence scores. You can use wandb for this, but if using ImageDraw or something else is more convenient, feel free to use that instead.
+| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
+|---|---|---|
+| ![alt](pics/task2_pic1.png) | ![alt](pics/task2_pic2.png) | ![alt](pics/task2_pic3.png) |
+| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
+|---|---|---|
+| ![alt](pics/task2_pic4.png) | ![alt](pics/task2_pic5.png) | ![alt](pics/task2_pic11.png) |
+| Picture of a man and his dog | Heatmap activations for the person filter | Heatmap activations for the dog filter |
+|---|---|---|
+| ![alt](pics/task8_pic1.png) | ![alt](pics/task2_pic9.png) | ![alt](pics/task2_pic10.png) |
 
 
-#### Q2.4 In ``task_2.py``, there are places for you perform visualization (search for TODO). You need to perform the appropriate visualizations mentioned here:
-- Plot the loss every 500 iterations using wandb.
-- Use wandb to plot mAP on the *test* set every epoch.
-- Plot the class-wise APs at every epoch.
-- Plot bounding boxes on 10 random images at the end of the first epoch, and at the end of the last epoch. (You can visualize for more images, and choose whichever ones you feel represent the learning of the network the best. It's also interesting to see the kind of mistakes the network makes as it is learning, and also after it has learned a little bit!)
 
-#### Q2.5 Train the model using the hyperparameters provided for 5-6 epochs.
-The expected values for the metrics at the end of training are:
-- Train Loss: ~1.0
-- Test  mAP : ~0.13
+### A Failure Case
 
-Include all the code and images/logs after training.
-Report the final class-wise AP on the test set and the mAP.
+| Misinterpreted the nostrils as a cycle |
+|---|
+| ![alt](pics/task2_pic6.png) |
