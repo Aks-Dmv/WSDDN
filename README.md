@@ -2,7 +2,7 @@
 
 This repository was created in partial fulfillment for the course [Visual Learning and Recognition (16-824) Fall 2021](https://visual-learning.cs.cmu.edu/), which I took at CMU. 
 
-This repository contains code that trains object detectors in a *weakly supervised* setting, which means you're going to train object detectors without bounding box annotations.
+This repository contains code that trains object detectors in a *weakly supervised* setting. In other words, training object detectors without ground-truth bounding box annotations.
 
 We use [PyTorch](pytorch.org) to create our models and [Weights and Biases](https://wandb.ai/site) for visualizations and logging. We implemented a slightly simplified version of the following papers:
 
